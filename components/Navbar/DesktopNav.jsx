@@ -25,7 +25,6 @@ export default function DesktopNav({ session, signOut, signIn, providers, pathna
             <button className="black_btn" onClick={signOut}>
               Sign Out
             </button>
-            <Link href="/profile">
               <Image
                 src={session?.user.image}
                 alt="Profile picture"
@@ -33,7 +32,6 @@ export default function DesktopNav({ session, signOut, signIn, providers, pathna
                 height={37}
                 className="rounded-full"
               />
-            </Link>
           </div>
         ) : (
           <>
