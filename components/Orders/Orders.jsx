@@ -47,9 +47,12 @@ export default function Orders() {
   //   try {
   //     await fetch(`/api/orders/${item.id}`, { method: "DELETE" });
 
-  //     const filteredOrders = items.filter((i) => i.id !== item.id);
-
-  //     setOrders(filteredOrders)
+  //     const ids = items.map(item => item);
+  //     console.log(ids)
+  //     const filteredOrders = ids.filter((i) => i.id !== item.id);
+  //     console.log(filteredOrders)
+  //     items.pop(filteredOrders)
+  //     // setOrders(filteredOrders)
   //   } catch (error) {
   //     console.log(error)
   //   }
@@ -60,9 +63,9 @@ export default function Orders() {
       {!isLoading && <NoOrders ordersLength={orders.length === 0} />}
       <ul className="mt-8 mb-8 grid gap-x-8 gap-y-4 md:grid-cols-2 lg:grid-cols-3">
         {!isLoading &&
-          items.map((item) => (
+          items.map((item, index) => (
             <OrderItem
-              key={item.id}
+              key={index}
               name={item.name}
               price={item.price}
               date={fullDate}

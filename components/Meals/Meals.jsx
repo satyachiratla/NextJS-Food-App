@@ -78,7 +78,7 @@ export default function Meals() {
       {meals.map((meal, index) => (
         <MealItem
           key={index}
-          id={Math.floor(Math.random() * 1000000)}
+          id={meal.id}
           name={meal.name}
           desc={meal.description}
           price={meal.price}

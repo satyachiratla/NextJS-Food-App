@@ -16,6 +16,7 @@ export default function Cart() {
   const { items, totalAmount } = cartCtx;
 
   const cartItemAddHandler = (item) => {
+    console.log(item)
     cartCtx.addItem({ ...item, amount: 1 });
   };
 
