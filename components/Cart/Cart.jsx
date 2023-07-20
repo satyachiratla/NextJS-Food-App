@@ -16,7 +16,6 @@ export default function Cart() {
   const { items, totalAmount } = cartCtx;
 
   const cartItemAddHandler = (item) => {
-    console.log(item)
     cartCtx.addItem({ ...item, amount: 1 });
   };
 
@@ -33,7 +32,8 @@ export default function Cart() {
         body: JSON.stringify({
           userId: session?.user.id,
           user: userData,
-          orderedItems: cartCtx.items,
+          orderedItems: items,
+          totalAmount: totalAmount,
           date: new Date()
         }),
         headers: {

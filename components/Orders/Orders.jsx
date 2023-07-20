@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import OrderItem from "./OrderItem";
 import Skeleton from "@components/UI/Skeleton";
-import NoOrders from "./NoOrders";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -34,47 +33,47 @@ export default function Orders() {
     if (session?.user.id) fetchOrders();
   }, [session]);
 
-  const items = [];
   const orderedItems = orders.map((order) => order.orderedItems);
 
-  for (const order of orderedItems) {
-    for (const key in order) {
-      items.push(order[key]);
-    }
+  const handleDeleteOrder = (deletedOrderId) => {
+    const updatedOrders = orders.filter(
+      (order, index) => index !== deletedOrderId
+    );
+    setOrders(updatedOrders);
+  };
+
+  let content;
+
+  if (orders.length > 0 && !isLoading) {
+    content = (
+      <div className="mt-8 grid gap-x-4 gap-y-4 md:grid-cols-2">
+        {orderedItems.map((order, index) => (
+          <OrderItem
+            key={index}
+            id={index}
+            order={order}
+            date={fullDate}
+            onDelete={handleDeleteOrder}
+          />
+        ))}
+      </div>
+    );
+  } else if (!isLoading) {
+    content = (
+      <p className="mt-8 rounded-xl border border-gray-400 bg-teal-800 p-6 text-cyan-400 font-noto text-lg tracking-wide">
+        No Orders placed Yet! <br /> Explore our menu and customize your order
+        for a delightful dining experience.
+      </p>
+    );
   }
-
-  // const deleteHandler = async (item) => {
-  //   try {
-  //     await fetch(`/api/orders/${item.id}`, { method: "DELETE" });
-
-  //     const ids = items.map(item => item);
-  //     console.log(ids)
-  //     const filteredOrders = ids.filter((i) => i.id !== item.id);
-  //     console.log(filteredOrders)
-  //     items.pop(filteredOrders)
-  //     // setOrders(filteredOrders)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
   return (
     <>
-      {!isLoading && <NoOrders ordersLength={orders.length === 0} />}
-      <ul className="mt-8 mb-8 grid gap-x-8 gap-y-4 md:grid-cols-2 lg:grid-cols-3">
-        {!isLoading &&
-          items.map((item, index) => (
-            <OrderItem
-              key={index}
-              name={item.name}
-              price={item.price}
-              date={fullDate}
-              // handleDelete={() => deleteHandler(item)}
-            />
-          ))}
+      <div className="my-8 grid gap-x-4 gap-y-4 md:grid-cols-2">
         {isLoading &&
           [...Array(3).keys()].map((n) => <Skeleton key={n} index={n} />)}
-      </ul>
+      </div>
+      {content}
     </>
   );
 }
