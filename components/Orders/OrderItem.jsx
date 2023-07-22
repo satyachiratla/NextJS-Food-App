@@ -5,7 +5,7 @@ export default function OrderItem({ order, date, onDelete }) {
   );
 
   return (
-    <div className="border rounded-lg shadow-md p-4 mb-4 bg-gray-900 flex flex-col justify-between md:flex-row">
+    <div className="rounded-lg shadow-md p-4 mb-4 bg-gray-900 flex flex-col justify-between md:flex-row">
       <div>
         <h2 className="text-lg font-bold font-inter mb-2 text-orange-500">
           Order:

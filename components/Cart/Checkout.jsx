@@ -70,7 +70,7 @@ export default function Checkout({ onAddOrder, isSubmitting }) {
   };
 
   return (
-    <section className="mt-14 bg-slate-800 border-2 border-gray-300 rounded-lg p-8 mb-8">
+    <section className="mt-12 bg-slate-800 rounded-lg p-8 mb-8">
       <h1 className="text-center text-sky-500 text-2xl font-semibold font-satoshi tracking-wider border-b border-gray-400/50 pb-2">
         Place Order
       </h1>

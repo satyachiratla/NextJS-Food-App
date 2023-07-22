@@ -89,7 +89,7 @@ export default function Cart() {
 
   return (
     <>
-      <div className="mt-8 rounded-xl border border-gray-100 p-8 text-white bg-sky-950">{content}</div>
+      <div className="mt-8 rounded-xl shadow p-8 text-white bg-sky-950">{content}</div>
       <Checkout onAddOrder={orderSubmitHandler} isSubmitting={isSubmitting} />
     </>
   );

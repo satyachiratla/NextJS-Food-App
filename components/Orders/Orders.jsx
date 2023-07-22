@@ -47,7 +47,7 @@ export default function Orders() {
 
   if (orders.length > 0 && !isLoading) {
     content = (
-      <div className="mt-8 grid gap-x-4 gap-y-4 md:grid-cols-2">
+      <div className="mt-8 grid gap-4 md:grid-cols-2">
         {orders.map((order) => (
           <OrderItems
             key={order._id}
@@ -65,15 +65,15 @@ export default function Orders() {
         for a delightful dining experience.
       </p>
     );
+  } else if (isLoading) {
+    content = (
+      <div className="mt-8 grid gap-4 md:grid-cols-2">
+        {[...Array(4).keys()].map((n) => (
+          <Skeleton key={n} />
+        ))}
+      </div>
+    );
   }
 
-  return (
-    <>
-      <div className="my-8 grid gap-x-4 gap-y-4 md:grid-cols-2">
-        {isLoading &&
-          [...Array(3).keys()].map((n) => <Skeleton key={n} index={n} />)}
-      </div>
-      {content}
-    </>
-  );
+  return <>{content}</>;
 }
