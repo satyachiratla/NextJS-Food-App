@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import OrderItem from "./OrderItem";
 import Skeleton from "@components/UI/Skeleton";
+import OrderItems from "./OrderItems";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -33,13 +33,14 @@ export default function Orders() {
     if (session?.user.id) fetchOrders();
   }, [session]);
 
-  const orderedItems = orders.map((order) => order.orderedItems);
-
-  const handleDeleteOrder = (deletedOrderId) => {
-    const updatedOrders = orders.filter(
-      (order, index) => index !== deletedOrderId
-    );
-    setOrders(updatedOrders);
+  const deleteHandler = async (order) => {
+    try {
+      await fetch(`/api/orders/${order._id}`, { method: "DELETE" });
+      const filteredOrders = orders.filter((o) => o._id !== order._id);
+      setOrders(filteredOrders);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   let content;
@@ -47,13 +48,12 @@ export default function Orders() {
   if (orders.length > 0 && !isLoading) {
     content = (
       <div className="mt-8 grid gap-x-4 gap-y-4 md:grid-cols-2">
-        {orderedItems.map((order, index) => (
-          <OrderItem
-            key={index}
-            id={index}
-            order={order}
+        {orders.map((order) => (
+          <OrderItems
+            key={order._id}
+            orderItems={[order.orderedItems]}
             date={fullDate}
-            onDelete={handleDeleteOrder}
+            handleDelete={() => deleteHandler(order)}
           />
         ))}
       </div>
