@@ -10,13 +10,6 @@ export default function Orders() {
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
 
-  const date = new Date();
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
-
-  const fullDate = `${day}-${month}-${year}`;
-
   useEffect(() => {
     const fetchOrders = async () => {
       setIsLoading(true);
@@ -52,15 +45,15 @@ export default function Orders() {
           <OrderItems
             key={order._id}
             orderItems={[order.orderedItems]}
-            date={fullDate}
+            date={order.date}
             handleDelete={() => deleteHandler(order)}
           />
         ))}
       </div>
     );
-  } else if (!isLoading) {
+  } else if (!isLoading && orders.length < 1) {
     content = (
-      <p className="mt-8 rounded-xl border border-gray-400 bg-teal-800 p-6 text-cyan-400 font-noto text-lg tracking-wide">
+      <p className="mt-8 rounded-xl bg-teal-800 p-6 text-cyan-400 font-noto text-lg tracking-wide">
         No Orders placed Yet! <br /> Explore our menu and customize your order
         for a delightful dining experience.
       </p>
