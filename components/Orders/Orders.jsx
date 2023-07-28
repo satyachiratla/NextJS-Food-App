@@ -61,7 +61,7 @@ export default function Orders() {
     );
   } else if (!isLoading && orders.length < 1) {
     content = (
-      <p className="mt-8 rounded-xl bg-teal-800 p-6 text-cyan-400 font-noto text-lg tracking-wide">
+      <p className="mt-8 max-w-xl mx-auto rounded-xl bg-teal-800 p-6 text-cyan-400 font-noto text-lg tracking-wide">
         No Orders placed Yet! <br /> Explore our menu and customize your order
         for a delightful dining experience.
       </p>
