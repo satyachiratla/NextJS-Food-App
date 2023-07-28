@@ -7,7 +7,9 @@ export default function DesktopNav({
   signIn,
   providers,
   pathname,
+  items
 }) {
+
   return (
     <div className="hidden md:flex md:pr-6">
       {session?.user ? (
@@ -18,7 +20,7 @@ export default function DesktopNav({
               pathname === "/cart" ? "nav-active" : ""
             } nav`}
           >
-            Cart
+            Cart <span className="text-white bg-amber-700 rounded-full px-1">{items.length}</span>
           </Link>
           <Link
             href="/orders"

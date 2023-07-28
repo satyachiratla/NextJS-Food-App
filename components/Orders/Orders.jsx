@@ -33,10 +33,13 @@ export default function Orders() {
 
   const deleteHandler = async (order) => {
     try {
+      toast.loading("Deleting Order 🚀", { id: "1" });
       await fetch(`/api/orders/${order._id}`, { method: "DELETE" });
+      toast.success("Order deleted Successfully 🙂", { id: "1" });
       const filteredOrders = orders.filter((o) => o._id !== order._id);
       setOrders(filteredOrders);
     } catch (error) {
+      toast.error("Failed to delete Order!", { id: "1" });
       console.log(error);
     }
   };

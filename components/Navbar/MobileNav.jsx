@@ -9,6 +9,7 @@ export default function MobileNav({
   signIn,
   providers,
   toggle,
+  items,
 }) {
   return (
     <div className="md:hidden relative ">
@@ -29,14 +30,17 @@ export default function MobileNav({
                 className="dropdown_link"
                 onClick={toggleHandler}
               >
-                Cart
+                Cart{" "}
+                <span className="text-white bg-amber-700 rounded-full px-1">
+                  {items.length}
+                </span>
               </Link>
               <Link
                 href="/orders"
                 className="dropdown_link"
                 onClick={toggleHandler}
               >
-                Orders
+                Your Orders
               </Link>
               <button
                 className="mt-5 w-full black_btn"

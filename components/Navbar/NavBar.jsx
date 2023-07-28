@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import CartContext from "@store/cart-context";
 import { usePathname } from "next/navigation";
 import { signIn, signOut, getProviders, useSession } from "next-auth/react";
 import MobileNav from "./MobileNav";
@@ -13,6 +14,9 @@ export default function NavBar() {
   const [providers, setProviders] = useState(null);
   const { data: session } = useSession();
   const pathname = usePathname();
+
+  const cartCtx = useContext(CartContext);
+  const { items } = cartCtx;
 
   useEffect(() => {
     const setUpProvider = async () => {
@@ -53,6 +57,7 @@ export default function NavBar() {
         setToggle={setToggle}
         providers={providers}
         toggle={toggle}
+        items={items}
       />
 
       {/* <-- Desktop Navigation --> */}
@@ -62,6 +67,7 @@ export default function NavBar() {
         signOut={signOut}
         providers={providers}
         pathname={pathname}
+        items={items}
       />
     </nav>
   );
