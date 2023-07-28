@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import MealItem from "./MealItem";
 import CartContext from "@store/cart-context";
 
@@ -56,18 +56,8 @@ const meals = [
 ];
 
 export default function Meals() {
-  // const [meals, setMeals] = useState([]);
 
   const cartCtx = useContext(CartContext);
-
-  // useEffect(() => {
-  //   const fetchMeals = async () => {
-  //     const response = await fetch("https://mealsapi.vercel.app/getmeals");
-  //     const data = await response.json();
-  //     setMeals(data);
-  //   };
-  //   fetchMeals();
-  // }, []);
 
   const addItemToCart = (cartData) => {
     cartCtx.addItem(cartData);

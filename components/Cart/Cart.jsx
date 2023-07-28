@@ -6,6 +6,7 @@ import CartItem from "./CartItem";
 import Checkout from "./Checkout";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 export default function Cart() {
   const cartCtx = useContext(CartContext);
@@ -25,6 +26,7 @@ export default function Cart() {
 
   const orderSubmitHandler = async (userData) => {
     setIsSubmitting(true);
+    toast.loading("Placing Order 🚀", { id: "1" })
 
     try {
       const response = await fetch("api/orders/new", {
@@ -42,11 +44,13 @@ export default function Cart() {
       });
 
       if (response.ok) {
+        toast.success("Order placed Successfully 😃", { id: "1" })
         router.push("/orders");
       }
       
       setIsSubmitting(false);
     } catch (error) {
+      toast.error("Failed to place Order 😞", { id: "1" })
       console.log(error);
     } finally {
       setIsSubmitting(false);

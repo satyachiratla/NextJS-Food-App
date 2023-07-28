@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { toast } from "react-hot-toast";
 
 export default function MealItem({
   id,
@@ -14,7 +15,6 @@ export default function MealItem({
 }) {
   const [amountIsValid, setAmountIsValid] = useState(true);
   const [showFullText, setShowFullText] = useState(false);
-  const [newsletter, setNewsletter] = useState(false);
 
   const { data: session } = useSession();
 
@@ -43,7 +43,6 @@ export default function MealItem({
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setNewsletter(true);
 
     const enteredAmount = inputRef.current.value;
     const enteredNumber = +enteredAmount;
@@ -63,14 +62,7 @@ export default function MealItem({
       price,
       amount: enteredNumber,
     });
-
-    const timer = setTimeout(() => {
-      setNewsletter(false);
-    }, 2000);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    toast.success("Item Added! Please checkout the Cart🛒", { id: "1" });
   };
 
   return (
@@ -110,11 +102,6 @@ export default function MealItem({
               </button>
               {!amountIsValid && <p>Please enter a valid amount(1-5)</p>}
             </form>
-            {newsletter && (
-              <p className="pt-2 text-green-700">
-                Succesfully added! Please checkout the Cart.
-              </p>
-            )}
           </div>
         )}
       </li>

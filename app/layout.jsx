@@ -2,6 +2,7 @@ import NavBar from "@components/Navbar/NavBar";
 import Provider from "@components/Provider";
 import CartProvider from "@store/CartProvider";
 import "@styles/globals.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata = {
   title: "Peddada Meals",
@@ -29,6 +30,7 @@ const RootLayout = ({ children }) => {
             <div className="main" />
             <main className="app">
               <NavBar />
+              <Toaster />
               {children}
             </main>
           </CartProvider>

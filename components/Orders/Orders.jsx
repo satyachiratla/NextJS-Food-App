@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import Skeleton from "@components/UI/Skeleton";
 import OrderItems from "./OrderItems";
+import { toast } from "react-hot-toast";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -13,11 +14,15 @@ export default function Orders() {
   useEffect(() => {
     const fetchOrders = async () => {
       setIsLoading(true);
+      toast.loading("Fetching Orders 🚀", { id: "1" });
       const res = await fetch(`/api/users/${session?.user.id}/orders`, {
         next: { revalidate: 10 },
       });
-
-      if (!res.ok) throw new Error("Failed to fetch Orders!");
+      toast.success("Orders fetched Successfully 😀", { id: "1" });
+      if (!res.ok) {
+        toast.error("Failed to fetch Orders 😞", { id: "1" });
+        throw new Error("Failed to fetch Orders!");
+      }
       const data = await res.json();
       setOrders(data);
       setIsLoading(false);

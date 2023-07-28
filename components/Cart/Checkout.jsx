@@ -2,6 +2,7 @@
 
 import CartContext from "@store/cart-context";
 import { useContext, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const isEmpty = (value) => value.trim() === "";
 const isFiveChars = (value) => value.trim().length === 6;
@@ -24,7 +25,7 @@ export default function Checkout({ onAddOrder, isSubmitting }) {
     e.preventDefault();
 
     if (cartCtx.items.length === 0) {
-      alert("Please add items to the cart!");
+      toast.error("Please add items to the cart🛒", { id: "1" })
       setFormInputsValidity({
         name: true,
         address: true,
