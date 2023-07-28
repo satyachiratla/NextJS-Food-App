@@ -85,7 +85,7 @@
 
 @layer utilities {
   .nav {
-    @apply relative text-white font-inter font-medium tracking-[1px]
+    @apply relative text-white font-inter font-medium tracking-[1px] inline-flex
   }
 
   .nav::after {

@@ -1,3 +1,4 @@
+import Footer from "@components/Footer/Footer";
 import NavBar from "@components/Navbar/NavBar";
 import Provider from "@components/Provider";
 import CartProvider from "@store/CartProvider";
@@ -32,6 +33,7 @@ const RootLayout = ({ children }) => {
               <NavBar />
               <Toaster />
               {children}
+              <Footer />
             </main>
           </CartProvider>
         </Provider>

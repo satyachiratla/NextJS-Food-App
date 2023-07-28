@@ -64,7 +64,7 @@ export default function Meals() {
   };
 
   return (
-    <ul className="mb-20 mt-10 grid gap-8 md:grid-cols-3 md:mt-16">
+    <ul className="mb-20 mt-10 grid gap-8 md:grid-cols-3">
       {meals.map((meal, index) => (
         <MealItem
           key={index}
