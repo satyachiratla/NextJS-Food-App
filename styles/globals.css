@@ -82,3 +82,21 @@
 .dropdown_link {
   @apply text-base tracking-wide font-inter text-gray-700 hover:text-gray-500 font-medium;
 }
+
+@layer utilities {
+  .nav {
+    @apply relative text-white font-inter font-medium tracking-[1px]
+  }
+
+  .nav::after {
+    @apply content-[''] bg-white h-[2px] w-[0%] left-0 -bottom-[3px] rounded-xl absolute duration-300
+  }
+
+  .nav:hover::after {
+    @apply w-[100%]
+  }
+
+  .nav-active::after {
+    @apply w-[100%]
+  }
+}

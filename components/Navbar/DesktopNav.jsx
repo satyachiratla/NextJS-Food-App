@@ -15,16 +15,16 @@ export default function DesktopNav({
           <Link
             href="/cart"
             className={`${
-              pathname === "/cart" ? "underline underline-offset-4" : ""
-            } text-lg text-white font-inter font-medium tracking-wide hover:underline underline-offset-4`}
+              pathname === "/cart" ? "nav-active" : ""
+            } nav`}
           >
             Cart
           </Link>
           <Link
             href="/orders"
             className={`${
-              pathname === "/orders" ? "underline underline-offset-4" : ""
-            } text-lg text-white font-inter font-medium tracking-wide hover:underline underline-offset-4`}
+              pathname === "/orders" ? "nav-active" : ""
+            } nav`}
           >
             Orders
           </Link>
