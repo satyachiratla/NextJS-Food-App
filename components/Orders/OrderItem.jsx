@@ -10,7 +10,7 @@ export default function OrderItem({ order, date, onDelete }) {
         <h2 className="text-lg font-bold font-inter mb-2 text-orange-500">
           Order:
         </h2>
-        <ul className="md:h-14 md:bg-gray-800 md:pr-2 rounded md:overflow-scroll">
+        <ul className="md:h-[70px] md:bg-gray-800 md:px-4 md:py-2 rounded md:overflow-scroll no-scrollbar">
           {order.map((item) => (
             <li key={item.id} className="mb-1 text-white font-lunasima">
               {item.name} x <span className="text-red-300">{item.amount}</span>{" "}
