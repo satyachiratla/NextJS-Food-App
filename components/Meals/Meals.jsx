@@ -3,6 +3,7 @@
 import { useContext } from "react";
 import MealItem from "./MealItem";
 import CartContext from "@store/cart-context";
+import { motion } from "framer-motion";
 
 const meals = [
   {
@@ -56,26 +57,52 @@ const meals = [
 ];
 
 export default function Meals() {
-
   const cartCtx = useContext(CartContext);
 
   const addItemToCart = (cartData) => {
     cartCtx.addItem(cartData);
   };
 
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 0.3,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
   return (
-    <ul className="mb-20 mt-10 grid gap-8 md:grid-cols-3">
+    <motion.ul
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      className="mb-10 mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+    >
       {meals.map((meal, index) => (
-        <MealItem
-          key={index}
-          id={meal.id}
-          name={meal.name}
-          desc={meal.description}
-          price={meal.price}
-          image={meal.image}
-          onAddToCart={addItemToCart}
-        />
+        <motion.div variants={item}>
+          <MealItem
+            key={index}
+            id={meal.id}
+            name={meal.name}
+            desc={meal.description}
+            price={meal.price}
+            image={meal.image}
+            onAddToCart={addItemToCart}
+          />
+        </motion.div>
       ))}
-    </ul>
+    </motion.ul>
   );
 }

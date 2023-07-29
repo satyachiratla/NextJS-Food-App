@@ -18,7 +18,7 @@ export default function MealItem({
 
   const { data: session } = useSession();
 
-  const maxWords = 10;
+  const maxWords = 8;
   const words = desc.split(" ");
   const truncatedText = words.slice(0, maxWords).join(" ");
 
@@ -66,45 +66,47 @@ export default function MealItem({
   };
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <li className="max-w-sm bg-teal-950 text-white rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out hover:scale-105  hover:bg-white hover:text-black">
-        <Image
-          className="w-full h-80 rounded-t-lg"
-          src={image}
-          alt="item"
-          height={220}
-          width={220}
-        />
-        <div className="px-6 pt-4 pb-2">
-          <div className="flex justify-between items-center mb-2">
-            <div className="font-bold text-xl font-noto">{name}</div>
-            <span className="font-light text-red-600 text-xl">₹{price}</span>
-          </div>
-          {description}
+    <li
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="max-w-sm mx-auto h-auto w-80 bg-teal-950 text-white rounded-lg overflow-hidden shadow-lg transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-black"
+    >
+      <Image
+        className="w-full h-60 rounded-t-lg"
+        src={image}
+        alt="item"
+        height={100}
+        width={100}
+      />
+      <div className="px-6 pt-4 pb-2">
+        <div className="flex justify-between items-center mb-2">
+          <div className="font-bold text-xl font-noto">{name}</div>
+          <span className="font-light text-red-600 text-xl">₹{price}</span>
         </div>
-        {session?.user && (
-          <div className="px-6 pt-2 pb-4">
-            <form
-              onSubmit={submitHandler}
-              className="flex justify-center space-x-4"
-            >
-              <input
-                ref={inputRef}
-                type="number"
-                min="1"
-                max="5"
-                step="1"
-                defaultValue={1}
-                className="border-2 border-gray-300 text-black rounded w-12 pl-2"
-              />
-              <button type="submit" className="black_btn">
-                Add to Cart
-              </button>
-              {!amountIsValid && <p>Please enter a valid amount(1-5)</p>}
-            </form>
-          </div>
-        )}
-      </li>
-    </div>
+        {description}
+      </div>
+      {session?.user && (
+        <div className="px-6 pt-2 pb-4">
+          <form
+            onSubmit={submitHandler}
+            className="flex justify-center space-x-4"
+          >
+            <input
+              ref={inputRef}
+              type="number"
+              min="1"
+              max="5"
+              step="1"
+              defaultValue={1}
+              className="border-2 border-gray-300 text-black rounded w-12 pl-2"
+            />
+            <button type="submit" className="black_btn">
+              Add to Cart
+            </button>
+            {!amountIsValid && <p>Please enter a valid amount(1-5)</p>}
+          </form>
+        </div>
+      )}
+    </li>
   );
 }

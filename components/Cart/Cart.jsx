@@ -7,6 +7,7 @@ import Checkout from "./Checkout";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { motion } from "framer-motion";
 
 export default function Cart() {
   const cartCtx = useContext(CartContext);
@@ -15,6 +16,30 @@ export default function Cart() {
   const router = useRouter();
 
   const { items, totalAmount } = cartCtx;
+
+  const cartVariants = {
+    hidden: {
+      y: -30,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { delay: 0.2, duration: 0.5 },
+    },
+  };
+
+  const checkoutVariants = {
+    hidden: {
+      y: 250,
+      opacity: 0,
+    },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { delay: 0.2, duration: 0.5 },
+    },
+  };
 
   const cartItemAddHandler = (item) => {
     cartCtx.addItem({ ...item, amount: 1 });
@@ -26,7 +51,7 @@ export default function Cart() {
 
   const orderSubmitHandler = async (userData) => {
     setIsSubmitting(true);
-    toast.loading("Placing Order 🚀", { id: "1" })
+    toast.loading("Placing Order 🚀", { id: "1" });
 
     try {
       const response = await fetch("api/orders/new", {
@@ -36,7 +61,7 @@ export default function Cart() {
           user: userData,
           orderedItems: items,
           totalAmount: totalAmount,
-          date: new Date()
+          date: new Date(),
         }),
         headers: {
           "Content-Type": "application/json",
@@ -44,13 +69,13 @@ export default function Cart() {
       });
 
       if (response.ok) {
-        toast.success("Order placed Successfully 😃", { id: "1" })
+        toast.success("Order placed Successfully 😃", { id: "1" });
         router.push("/orders");
       }
-      
+
       setIsSubmitting(false);
     } catch (error) {
-      toast.error("Failed to place Order 😞", { id: "1" })
+      toast.error("Failed to place Order 😞", { id: "1" });
       console.log(error);
     } finally {
       setIsSubmitting(false);
@@ -85,7 +110,9 @@ export default function Cart() {
           <span className="font-bold text-2xl text-cyan-500 tracking-wider items-center pr-4">
             Total Amount:
           </span>
-          <span className="font-semibold text-zinc-100 font-inter text-2xl">₹{totalAmount}</span>
+          <span className="font-semibold text-zinc-100 font-inter text-2xl">
+            ₹{totalAmount}
+          </span>
         </div>
       </>
     );
@@ -93,8 +120,21 @@ export default function Cart() {
 
   return (
     <>
-      <div className="mt-8 rounded-xl shadow p-8 text-white bg-sky-950">{content}</div>
-      <Checkout onAddOrder={orderSubmitHandler} isSubmitting={isSubmitting} />
+      <motion.div
+        variants={cartVariants}
+        initial="hidden"
+        animate="visible"
+        className="mt-8 rounded-xl shadow p-8 text-white bg-sky-950"
+      >
+        {content}
+      </motion.div>
+      <motion.div
+        variants={checkoutVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        <Checkout onAddOrder={orderSubmitHandler} isSubmitting={isSubmitting} />
+      </motion.div>
     </>
   );
 }

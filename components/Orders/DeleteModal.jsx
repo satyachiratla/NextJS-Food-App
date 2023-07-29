@@ -1,11 +1,19 @@
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function DeleteModal({ onCancel, onDelete }) {
   return (
-    <>
+    <AnimatePresence>
       <div
         id="modal-backdrop"
         className="fixed inset-0 z-30 bg-gray-100 bg-opacity-10 backdrop-blur"
       ></div>
-      <div className="relative z-50 flex flex-col max-w-sm mx-auto mb-8 bg-white p-6 rounded-lg">
+      <motion.div
+        initial={{ scale: 0.5, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.5, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="relative z-50 flex flex-col max-w-sm mx-auto mb-8 bg-white p-6 rounded-lg"
+      >
         <p className="text-center text-xl font-noto">
           Are you sure you want to delete the order?
         </p>
@@ -23,7 +31,7 @@ export default function DeleteModal({ onCancel, onDelete }) {
             Confirm
           </button>
         </div>
-      </div>
-    </>
+      </motion.div>
+    </AnimatePresence>
   );
 }

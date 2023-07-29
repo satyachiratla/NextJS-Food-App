@@ -1,5 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect } from "react";
 
 export default function DesktopNav({
   session,
@@ -9,10 +13,40 @@ export default function DesktopNav({
   pathname,
   items,
 }) {
+  const controls = useAnimation();
+
+  const linksVariants = {
+    hidden: {
+      x: "100vw",
+      opacity: 0,
+    },
+    visible: {
+      x: 0,
+      opacity: 1,
+      transition: { delay: 0.2, duration: 0.5, type: "tween" },
+    },
+  };
+
+  useEffect(() => {
+    if (items.length === 0) {
+      return;
+    }
+
+    controls.start({
+      scale: [1, 1.2, 1],
+      transition: { duration: 0.3 },
+    });
+  }, [items]);
+
   return (
     <div className="hidden md:flex md:pr-6">
       {session?.user ? (
-        <div className="flex justify-center items-center gap-8">
+        <motion.div
+          variants={linksVariants}
+          initial="hidden"
+          animate="visible"
+          className="flex justify-center items-center gap-8"
+        >
           <Link
             href="/cart"
             className={`${pathname === "/cart" ? "nav-active" : ""} nav`}
@@ -32,9 +66,12 @@ export default function DesktopNav({
               />
             </svg>
             Cart{" "}
-            <span className="bg-amber-600 text-white rounded-full px-1">
+            <motion.span
+              animate={controls}
+              className="bg-amber-600 text-white rounded-full px-1.5"
+            >
               {items.length}
-            </span>
+            </motion.span>
           </Link>
           <Link
             href="/orders"
@@ -52,7 +89,7 @@ export default function DesktopNav({
             height={37}
             className="rounded-full"
           />
-        </div>
+        </motion.div>
       ) : (
         <>
           {providers &&
