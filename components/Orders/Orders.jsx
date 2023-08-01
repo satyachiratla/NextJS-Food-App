@@ -29,7 +29,7 @@ export default function Orders() {
     };
 
     if (session?.user.id) fetchOrders();
-  }, [session]);
+  }, [session?.user]);
 
   const deleteHandler = async (order) => {
     try {

@@ -44,7 +44,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 w-full backdrop-blur flex justify-between items-center py-6 px-6 mx-auto border-b border-gray-300/75">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full backdrop-blur flex justify-between items-center py-6 px-6 mx-auto border-b border-gray-300/75">
       <motion.div variants={navVariants} initial="hidden" animate="visible">
         <Link
           href="/"

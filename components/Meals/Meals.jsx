@@ -91,7 +91,7 @@ export default function Meals() {
       className="mb-10 mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-3"
     >
       {meals.map((meal, index) => (
-        <motion.div variants={item}>
+        <motion.div variants={item} key={index}>
           <MealItem
             key={index}
             id={meal.id}

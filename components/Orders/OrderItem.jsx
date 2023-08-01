@@ -19,9 +19,7 @@ export default function OrderItem({ order, date, onDelete }) {
 
   return (
     <>
-      {openModal && (
-        <DeleteModal onCancel={closeModalHandler} onDelete={onDelete} />
-      )}
+     { openModal && <DeleteModal onCancel={closeModalHandler} onDelete={onDelete} /> }
       {!openModal && (
         <li className="rounded-lg shadow-md p-4 mb-4 bg-gray-900 flex flex-col justify-between md:flex-row">
           <div>
