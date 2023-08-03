@@ -2,13 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useContext } from "react";
-import CartContext from "@store/cart-context";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { signIn, signOut, getProviders, useSession } from "next-auth/react";
 import MobileNav from "./MobileNav";
 import DesktopNav from "./DesktopNav";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
 
 export default function NavBar() {
   const [toggle, setToggle] = useState(false);
@@ -16,8 +16,7 @@ export default function NavBar() {
   const { data: session } = useSession();
   const pathname = usePathname();
 
-  const cartCtx = useContext(CartContext);
-  const { items } = cartCtx;
+  const items = useSelector(state => state.cart.items)
 
   const navVariants = {
     hidden: {

@@ -3,7 +3,7 @@ import DeleteModal from "./DeleteModal";
 
 export default function OrderItem({ order, date, onDelete }) {
   const totalPrice = order.reduce(
-    (acc, item) => acc + item.price * item.amount,
+    (acc, item) => acc + item.price * item.quantity,
     0
   );
 
@@ -31,7 +31,7 @@ export default function OrderItem({ order, date, onDelete }) {
                 <li key={item.id} className="mb-1 text-white font-lunasima">
                   {item.name} x{" "}
                   <span className="text-red-300">{item.amount}</span> - ₹
-                  {item.price * item.amount}
+                  {item.price * item.quantity}
                 </li>
               ))}
             </ul>

@@ -23,7 +23,7 @@ const OrderSchema = new Schema({
   //   user: { type: [orderedUserSchema], required: true },
   //   orderedItems: { type: [orderedItemSchema], required: true },
   user: [],
-  orderedItems: [orderedItemSchema],
+  orderedItems: [],
   totalAmount: { type: Number, required: true },
   date: {
     type: Date,

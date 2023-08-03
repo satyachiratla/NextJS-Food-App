@@ -3,6 +3,7 @@
 import CartContext from "@store/cart-context";
 import { useContext, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const isEmpty = (value) => value.trim() === "";
 const isFiveChars = (value) => value.trim().length === 6;
@@ -15,6 +16,8 @@ export default function Checkout({ onAddOrder, isSubmitting }) {
     pincode: true,
   });
 
+  const items = useSelector(state => state.cart.items);
+
   const cartCtx = useContext(CartContext);
   const nameRef = useRef();
   const addressRef = useRef();
@@ -24,7 +27,7 @@ export default function Checkout({ onAddOrder, isSubmitting }) {
   const addOrder = (e) => {
     e.preventDefault();
 
-    if (cartCtx.items.length === 0) {
+    if (items.length === 0) {
       toast.error("Please add items to the cart🛒", { id: "1" })
       setFormInputsValidity({
         name: true,

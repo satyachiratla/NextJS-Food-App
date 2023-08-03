@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
 
@@ -60,7 +60,7 @@ export default function MealItem({
       id,
       name,
       price,
-      amount: enteredNumber,
+      quantity: enteredNumber,
     });
     toast.success("Item Added! Please checkout the Cart🛒", { id: "1" });
   };
@@ -68,12 +68,13 @@ export default function MealItem({
   return (
     <li>
       <div className="group relative cursor-pointer rounded-t-lg items-center justify-center overflow-hidden transition-shadow hover:shadow-xl hover:shadow-black/30">
-        <div className="h-72 w-full md:h-72 md:w-96">
+        <div className="relative h-72 w-full md:h-72 md:w-96">
           <Image
             className="h-full w-full transition-transform duration-500 group-hover:rotate-3 group-hover:scale-125"
             src={image}
             alt="item"
             layout="fill"
+            priority
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent group-hover:from-black/70 group-hover:via-black/60 group-hover:to-black/70"></div>

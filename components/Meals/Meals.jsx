@@ -1,9 +1,9 @@
 "use client";
 
-import { useContext } from "react";
 import MealItem from "./MealItem";
-import CartContext from "@store/cart-context";
 import { motion } from "framer-motion";
+import { cartActions } from "@redux-store/cart-slice";
+import { useDispatch } from "react-redux";
 
 const meals = [
   {
@@ -57,10 +57,11 @@ const meals = [
 ];
 
 export default function Meals() {
-  const cartCtx = useContext(CartContext);
+
+  const dispatch = useDispatch();
 
   const addItemToCart = (cartData) => {
-    cartCtx.addItem(cartData);
+    dispatch(cartActions.addItemToCart(cartData))
   };
 
   const container = {

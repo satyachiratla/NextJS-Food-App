@@ -1,21 +1,24 @@
 "use client";
 
-import { useContext, useState } from "react";
-import CartContext from "@store/cart-context";
+import { useState } from "react";
 import CartItem from "./CartItem";
 import Checkout from "./Checkout";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
+import { useSelector, useDispatch } from "react-redux";
+import { cartActions } from "@redux-store/cart-slice";
 
 export default function Cart() {
-  const cartCtx = useContext(CartContext);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
+  const dispatch = useDispatch()
 
-  const { items, totalAmount } = cartCtx;
+  const items = useSelector(state => state.cart.items);
+  const totalAmount = useSelector(state => state.cart.totalAmount);
 
   const cartVariants = {
     hidden: {
@@ -42,11 +45,11 @@ export default function Cart() {
   };
 
   const cartItemAddHandler = (item) => {
-    cartCtx.addItem({ ...item, amount: 1 });
+    dispatch(cartActions.addItemToCart({ ...item, quantity: 1}))
   };
 
   const cartItemRemoveHandler = (id) => {
-    cartCtx.removeItem(id);
+    dispatch(cartActions.removeItemFromCart(id))
   };
 
   const orderSubmitHandler = async (userData) => {
@@ -100,7 +103,7 @@ export default function Cart() {
               key={item.id}
               name={item.name}
               price={item.price}
-              amount={item.amount}
+              quantity={item.quantity}
               onAdd={cartItemAddHandler.bind(null, item)}
               onRemove={cartItemRemoveHandler.bind(null, item.id)}
             />
