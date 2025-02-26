@@ -1,11 +1,27 @@
 import { useState } from "react";
 import DeleteModal from "./DeleteModal";
+import { useDeleteOrderMutation } from "@redux-store/apis/ordersApi";
 
-export default function OrderItem({ order, date, onDelete }) {
-  const totalPrice = order.reduce(
+export default function OrderItem({ orderItems, date, id }) {
+  const [deleteOrder, { isLoading: isDeletingOrder }] =
+    useDeleteOrderMutation();
+  // console.log("order--->", order);
+
+  const formattedDate = date.slice(0, 10);
+
+  const totalPrice = orderItems.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
   );
+
+  const deleteOrderHandler = async () => {
+    try {
+      const response = await deleteOrder(id);
+      console.log("deleteResponse-->", response);
+    } catch (error) {
+      console.error("Deleting order failed", error);
+    }
+  };
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -19,7 +35,12 @@ export default function OrderItem({ order, date, onDelete }) {
 
   return (
     <>
-     { openModal && <DeleteModal onCancel={closeModalHandler} onDelete={onDelete} /> }
+      {openModal && (
+        <DeleteModal
+          onCancel={closeModalHandler}
+          onDelete={deleteOrderHandler}
+        />
+      )}
       {!openModal && (
         <li className="rounded-lg shadow-md p-4 mb-4 bg-gray-900 flex flex-col justify-between md:flex-row">
           <div>
@@ -27,10 +48,10 @@ export default function OrderItem({ order, date, onDelete }) {
               Order:
             </h2>
             <ul className="md:h-[70px] md:bg-gray-800 md:px-2 md:py-2 rounded md:overflow-scroll no-scrollbar">
-              {order.map((item) => (
+              {orderItems.map((item) => (
                 <li key={item.id} className="mb-1 text-white font-lunasima">
                   {item.name} x{" "}
-                  <span className="text-red-300">{item.amount}</span> - ₹
+                  <span className="text-red-300">{item.quantity}</span> - ₹
                   {item.price * item.quantity}
                 </li>
               ))}
@@ -44,7 +65,9 @@ export default function OrderItem({ order, date, onDelete }) {
               <h3 className="font-bold text-lg text-neutral-50">
                 Order Placed
               </h3>
-              <p className="font-medium text-gray-300 text-base">{date}</p>
+              <p className="font-medium text-gray-300 text-base">
+                {formattedDate}
+              </p>
             </div>
             <button onClick={openModalHandler} className="black_btn mx-auto">
               Delete

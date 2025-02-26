@@ -2,21 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
-import { signIn, signOut, getProviders, useSession } from "next-auth/react";
+import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import MobileNav from "./MobileNav";
 import DesktopNav from "./DesktopNav";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import useUser from "@hooks/useUser";
+import { logout } from "@redux-store/slices/authSlice";
 
 export default function NavBar() {
   const [toggle, setToggle] = useState(false);
-  const [providers, setProviders] = useState(null);
-  const { data: session } = useSession();
   const pathname = usePathname();
+  const { isAuthenticated, userData, refetch } = useUser();
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const items = useSelector(state => state.cart.items)
+  const items = useSelector((state) => state.cart.items);
 
   const navVariants = {
     hidden: {
@@ -30,16 +32,14 @@ export default function NavBar() {
     },
   };
 
-  useEffect(() => {
-    const setUpProvider = async () => {
-      const response = await getProviders();
-      setProviders(response);
-    };
-    setUpProvider();
-  }, []);
-
   const toggleHandler = () => {
     setToggle(false);
+  };
+
+  const signOutHandler = () => {
+    dispatch(logout());
+    refetch();
+    router.push("/");
   };
 
   return (
@@ -64,24 +64,22 @@ export default function NavBar() {
 
       {/* <-- Mobile Navigation --> */}
       <MobileNav
-        session={session}
-        signIn={signIn}
-        signOut={signOut}
+        signOut={signOutHandler}
+        session={isAuthenticated}
         toggleHandler={toggleHandler}
         setToggle={setToggle}
-        providers={providers}
         toggle={toggle}
         items={items}
+        userData={userData}
       />
 
       {/* <-- Desktop Navigation --> */}
       <DesktopNav
-        session={session}
-        signIn={signIn}
-        signOut={signOut}
-        providers={providers}
+        session={isAuthenticated}
+        signOut={signOutHandler}
         pathname={pathname}
         items={items}
+        userData={userData}
       />
     </nav>
   );
