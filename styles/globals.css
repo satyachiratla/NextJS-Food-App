@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lunasima&family=Nunito:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500&family=Lunasima&family=Nunito:wght@500&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lunasima&family=Nunito:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500&family=Lunasima&family=Nunito:wght@500&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -52,7 +51,7 @@
 /* Tailwind Styles */
 
 .app {
-  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
+  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto;
 }
 
 .black_btn {
@@ -72,44 +71,44 @@
 }
 
 .form_invalid {
-  @apply w-full flex rounded-lg mt-2 p-3 text-sm outline-none bg-red-200 
+  @apply w-full flex rounded-lg mt-2 p-3 text-sm outline-none bg-red-200;
 }
 
-.dropdown {
+.custom_dropdown {
   @apply absolute right-0 top-full mt-3 w-full p-5 rounded-lg bg-white min-w-[210px] flex flex-col gap-2 justify-end items-end;
 }
 
-.dropdown_link {
+.custom_dropdown_link {
   @apply text-base tracking-wide font-inter text-gray-700 hover:text-gray-500 font-medium;
 }
 
 @layer utilities {
   .nav {
-    @apply relative text-white font-inter font-medium tracking-[1px] inline-flex
+    @apply relative text-white font-inter font-medium tracking-[1px] inline-flex;
   }
 
   .nav::after {
-    @apply content-[''] bg-white h-[2px] w-[0%] left-0 -bottom-[3px] rounded-xl absolute duration-300
+    @apply content-[''] bg-white h-[2px] w-[0%] left-0 -bottom-[3px] rounded-xl absolute duration-300;
   }
 
   .nav:hover::after {
-    @apply w-[100%]
+    @apply w-[100%];
   }
 
   .nav-active::after {
-    @apply w-[100%]
+    @apply w-[100%];
   }
 
   @variants responsive {
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
-        display: none;
+      display: none;
     }
 
     /* Hide scrollbar for IE, Edge and Firefox */
     .no-scrollbar {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
     }
   }
 }

@@ -2,23 +2,25 @@
 
 import { useState } from "react";
 import CartItem from "./CartItem";
-import Checkout from "./Checkout";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
-import { cartActions } from "@redux-store/cart-slice";
+import {
+  addItemToCart,
+  removeItemFromCart,
+} from "@redux-store/slices/cartSlice";
+import ChooseAddress from "./ChooseAddress";
 
 export default function Cart() {
-
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const items = useSelector(state => state.cart.items);
-  const totalAmount = useSelector(state => state.cart.totalAmount);
+  const items = useSelector((state) => state.cart.items);
+  const totalAmount = useSelector((state) => state.cart.totalAmount);
 
   const cartVariants = {
     hidden: {
@@ -45,11 +47,11 @@ export default function Cart() {
   };
 
   const cartItemAddHandler = (item) => {
-    dispatch(cartActions.addItemToCart({ ...item, quantity: 1}))
+    dispatch(addItemToCart({ ...item, quantity: 1 }));
   };
 
   const cartItemRemoveHandler = (id) => {
-    dispatch(cartActions.removeItemFromCart(id))
+    dispatch(removeItemFromCart(id));
   };
 
   const orderSubmitHandler = async (userData) => {
@@ -127,7 +129,7 @@ export default function Cart() {
         variants={cartVariants}
         initial="hidden"
         animate="visible"
-        className="mt-8 rounded-xl shadow p-8 text-white bg-sky-950"
+        className="mt-8 rounded-xl shadow p-8 text-white bg-sky-950 max-w-2xl mx-auto"
       >
         {content}
       </motion.div>
@@ -136,7 +138,8 @@ export default function Cart() {
         initial="hidden"
         animate="visible"
       >
-        <Checkout onAddOrder={orderSubmitHandler} isSubmitting={isSubmitting} />
+        {/* <Checkout onAddOrder={orderSubmitHandler} isSubmitting={isSubmitting} /> */}
+        <ChooseAddress items={items} totalPrice={totalAmount} />
       </motion.div>
     </>
   );

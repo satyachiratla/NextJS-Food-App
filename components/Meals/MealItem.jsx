@@ -2,8 +2,8 @@
 
 import { useRef, useState } from "react";
 import Image from "next/legacy/image";
-import { useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
+import useUser from "@hooks/useUser";
 
 export default function MealItem({
   id,
@@ -16,7 +16,7 @@ export default function MealItem({
   const [amountIsValid, setAmountIsValid] = useState(true);
   // const [showFullText, setShowFullText] = useState(false);
 
-  const { data: session } = useSession();
+  const { isAuthenticated } = useUser();
 
   // const maxWords = 8;
   // const words = desc.split(" ");
@@ -89,7 +89,7 @@ export default function MealItem({
           <h1 className="font-bold text-xl font-noto text-white">{name}</h1>
           <span className="font-light text-red-600 text-xl">₹{price}</span>
         </div>
-        {session?.user && (
+        {isAuthenticated && (
           <div className="pb-4">
             <form
               onSubmit={submitHandler}

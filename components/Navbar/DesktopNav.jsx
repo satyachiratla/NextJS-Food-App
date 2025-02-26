@@ -1,17 +1,17 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useAnimation } from "framer-motion";
-import { useEffect } from "react";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function DesktopNav({
   session,
-  signOut,
-  signIn,
-  providers,
   pathname,
+  signOut,
   items,
+  userData,
 }) {
   const controls = useAnimation();
 
@@ -40,7 +40,7 @@ export default function DesktopNav({
 
   return (
     <div className="hidden md:flex md:pr-6">
-      {session?.user ? (
+      {session ? (
         <motion.div
           variants={linksVariants}
           initial="hidden"
@@ -79,30 +79,47 @@ export default function DesktopNav({
           >
             Orders
           </Link>
-          <button className="black_btn" onClick={signOut}>
-            Sign Out
-          </button>
-          <Image
-            src={session?.user.image}
-            alt="Profile picture"
-            width={37}
-            height={37}
-            className="rounded-full"
-          />
+          <div className="dropdown dropdown-hover dropdown-bottom p-0">
+            <div tabIndex={0} role="button">
+              {userData?.user?.profilePic ? (
+                <Image
+                  src={userData?.user?.profilePic}
+                  alt="Profile picture"
+                  width={18}
+                  height={18}
+                  className="rounded-full object-cover w-9 h-9"
+                />
+              ) : (
+                <FaUserCircle size={36} />
+              )}
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content absolute right-0 menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            >
+              <li>
+                <Link href="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link href="/addresses">Addresses</Link>
+              </li>
+              <li>
+                <button type="button" onClick={signOut}>
+                  Sign Out
+                </button>
+              </li>
+            </ul>
+          </div>
         </motion.div>
       ) : (
         <>
-          {providers &&
-            Object.values(providers).map((provider) => (
-              <button
-                type="button"
-                key={provider.name}
-                onClick={() => signIn(provider.id)}
-                className="black_btn"
-              >
-                Sign In
-              </button>
-            ))}
+          <button
+            type="button"
+            onClick={() => document.getElementById("my_modal_3").showModal()}
+            className="btn btn-neutral btn-sm"
+          >
+            Sign In
+          </button>
         </>
       )}
     </div>

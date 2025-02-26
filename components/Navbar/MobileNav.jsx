@@ -1,28 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function MobileNav({
-  session,
   setToggle,
   toggleHandler,
-  signOut,
-  signIn,
-  providers,
   toggle,
   items,
+  session,
+  signOut,
+  userData,
 }) {
   return (
-    <div className="md:hidden relative ">
-      {session?.user ? (
+    <div className="md:hidden relative">
+      {session ? (
         <div>
-          <Image
-            src={session?.user.image}
-            alt="logo"
-            width={37}
-            height={37}
-            className="rounded-full"
-            onClick={() => setToggle((prev) => !prev)}
-          />
+          {userData?.user?.profilePic ? (
+            <Image
+              src={userData?.user.profilePic}
+              alt="logo"
+              width={20}
+              height={20}
+              className="rounded-full object-cover w-10 h-10"
+              onClick={() => setToggle((prev) => !prev)}
+            />
+          ) : (
+            <FaUserCircle
+              size={28}
+              onClick={() => setToggle((prev) => !prev)}
+            />
+          )}
           {toggle && (
             <div className="dropdown">
               <Link
@@ -43,7 +50,7 @@ export default function MobileNav({
                 Your Orders
               </Link>
               <button
-                className="mt-5 w-full black_btn"
+                className="w-full btn btn-neutral btn-sm"
                 onClick={() => {
                   setToggle(false);
                   signOut();
@@ -56,17 +63,13 @@ export default function MobileNav({
         </div>
       ) : (
         <>
-          {providers &&
-            Object.values(providers).map((provider) => (
-              <button
-                type="button"
-                key={provider.name}
-                onClick={() => signIn(provider.id)}
-                className="black_btn"
-              >
-                Sign In
-              </button>
-            ))}
+          <button
+            type="button"
+            onClick={() => document.getElementById("my_modal_3").showModal()}
+            className="btn btn-neutral btn-sm"
+          >
+            Sign In
+          </button>
         </>
       )}
     </div>

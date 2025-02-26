@@ -29,7 +29,7 @@ export default function Footer() {
       <div className="text-center mb-8">
         <p className="text-lg tracking-wide font-lunasima text-white">
           {" "}
-          Made with ❤️ by Vivek
+          Made with ❤️ by Satya
         </p>
         <p className="text-zinc-200"> © {new Date().getFullYear()} Reserved</p>
       </div>

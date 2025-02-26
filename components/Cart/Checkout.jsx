@@ -1,6 +1,6 @@
 "use client";
 
-import CartContext from "@store/cart-context";
+import CartContext from "@context/cart-context";
 import { useContext, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -16,7 +16,7 @@ export default function Checkout({ onAddOrder, isSubmitting }) {
     pincode: true,
   });
 
-  const items = useSelector(state => state.cart.items);
+  const items = useSelector((state) => state.cart.items);
 
   const cartCtx = useContext(CartContext);
   const nameRef = useRef();
@@ -28,7 +28,7 @@ export default function Checkout({ onAddOrder, isSubmitting }) {
     e.preventDefault();
 
     if (items.length === 0) {
-      toast.error("Please add items to the cart🛒", { id: "1" })
+      toast.error("Please add items to the cart🛒", { id: "1" });
       setFormInputsValidity({
         name: true,
         address: true,
@@ -80,43 +80,56 @@ export default function Checkout({ onAddOrder, isSubmitting }) {
       </h1>
       <form
         onSubmit={addOrder}
-        className="mt-6 flex flex-col space-y-3 mx-auto max-w-md"
+        className="mt-6 flex flex-col space-y-2 mx-auto max-w-md"
       >
-        <label className="text-lg text-white font-noto">Your Name</label>
-        <input
-          ref={nameRef}
-          type="text"
-          className={`${
-            formInputsValidity.name ? "form_input" : "form_invalid"
-          }`}
-        />
-        <label className="text-lg text-white font-noto">Address</label>
-        <input
-          ref={addressRef}
-          type="text"
-          className={`${
-            formInputsValidity.address ? "form_input" : "form_invalid"
-          }`}
-        />
-        <label className="text-lg text-white font-noto">Landmark</label>
-        <input
-          ref={landmarkRef}
-          type="text"
-          className={`${
-            formInputsValidity.landmark ? "form_input" : "form_invalid"
-          }`}
-        />
-        <label className="text-lg text-white font-noto">Pincode</label>
-        <input
-          ref={codeRef}
-          type="number"
-          className={`${
-            formInputsValidity.pincode ? "form_input" : "form_invalid"
-          }`}
-        />
-        <button className="black_btn w-[60%] mx-auto md:w-[50%]">
-          {isSubmitting ? `${"Proceeding to Order"}` : "Proceed to Order"}
-        </button>
+        <div className="space-y-1">
+          <label className="text-lg text-white font-noto">Your Name</label>
+          <input
+            ref={nameRef}
+            type="text"
+            className={`${
+              formInputsValidity.name ? "form_input" : "form_invalid"
+            }`}
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-lg text-white font-noto">Address</label>
+          <input
+            ref={addressRef}
+            type="text"
+            className={`${
+              formInputsValidity.address ? "form_input" : "form_invalid"
+            }`}
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-lg text-white font-noto">Landmark</label>
+          <input
+            ref={landmarkRef}
+            type="text"
+            className={`${
+              formInputsValidity.landmark ? "form_input" : "form_invalid"
+            }`}
+          />
+        </div>
+        <div className="space-y-1">
+          <label className="text-lg text-white font-noto">Pincode</label>
+          <input
+            ref={codeRef}
+            type="number"
+            className={`${
+              formInputsValidity.pincode ? "form_input" : "form_invalid"
+            }`}
+          />
+        </div>
+        <div className="pt-2">
+          <button
+            className="btn btn-info mx-auto w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? `${"Proceeding to Order"}` : "Proceed to Order"}
+          </button>
+        </div>
       </form>
     </section>
   );
